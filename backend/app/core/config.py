@@ -56,15 +56,16 @@ class Settings(BaseSettings):
     MINIO_BUCKET: str = "incubrix-assets"
     MINIO_SECURE: bool = False
 
-    # AI - Gemini & Vertex AI
-    GEMINI_API_KEY: Optional[str] = None
+    # AI - Google Vertex AI (Gemini models served via Vertex AI; ADC-based auth)
+    GOOGLE_GENAI_USE_VERTEXAI: bool = True
+    GOOGLE_CLOUD_PROJECT: Optional[str] = None
+    GOOGLE_CLOUD_LOCATION: str = "us-central1"
+    GOOGLE_APPLICATION_CREDENTIALS: Optional[str] = None
+    # Primary / fallback Gemini model names on Vertex AI
     GEMINI_MODEL: str = "gemini-3.5-flash-lite"
     GEMINI_FALLBACK_MODEL: str = "gemini-3.1-flash-lite"
     GEMINI_CAROUSEL_MODEL: str = "gemini-3.5-flash-lite"
     GEMINI_CAROUSEL_FALLBACK_MODEL: str = "gemini-3.1-flash-lite"
-    GOOGLE_CLOUD_PROJECT: Optional[str] = None
-    GOOGLE_CLOUD_LOCATION: str = "us-central1"
-    GOOGLE_APPLICATION_CREDENTIALS: Optional[str] = None
 
     # Meta
     META_APP_ID: Optional[str] = None

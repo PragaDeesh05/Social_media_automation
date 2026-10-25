@@ -563,17 +563,36 @@ class MetaClient:
 
                 public_slide_url = None
                 if jpg_bytes:
+                    # 1. Primary: FreeImage CDN (returns permanent direct image URL on iili.io, perfectly accepted by Instagram crawler)
                     try:
-                        catbox_resp = await client.post(
-                            "https://catbox.moe/user/api.php",
-                            data={"reqtype": "fileupload"},
-                            files={"fileToUpload": (slide_name, jpg_bytes, "image/jpeg")},
+                        freeimg_resp = await client.post(
+                            "https://freeimage.host/api/1/upload",
+                            data={"key": "6d207e02198a847aa98d0a2a901485a5", "action": "upload", "format": "json"},
+                            files={"source": (slide_name, jpg_bytes, "image/jpeg")},
                             timeout=25.0
                         )
-                        if catbox_resp.status_code == 200 and catbox_resp.text.strip().startswith("https://"):
-                            public_slide_url = catbox_resp.text.strip()
+                        if freeimg_resp.status_code == 200:
+                            f_data = freeimg_resp.json()
+                            d_url = f_data.get("image", {}).get("url")
+                            if d_url and d_url.startswith("http"):
+                                public_slide_url = d_url
+                                logger.info(f"Bridged slide {idx+1} to FreeImage CDN: {public_slide_url}")
                     except Exception as e:
-                        logger.warning(f"Could not bridge slide {idx+1} to Catbox: {e}")
+                        logger.warning(f"Could not bridge slide {idx+1} to FreeImage CDN: {e}")
+
+                    # 2. Secondary fallback: Catbox
+                    if not public_slide_url:
+                        try:
+                            catbox_resp = await client.post(
+                                "https://catbox.moe/user/api.php",
+                                data={"reqtype": "fileupload"},
+                                files={"fileToUpload": (slide_name, jpg_bytes, "image/jpeg")},
+                                timeout=25.0
+                            )
+                            if catbox_resp.status_code == 200 and catbox_resp.text.strip().startswith("https://"):
+                                public_slide_url = catbox_resp.text.strip()
+                        except Exception as e:
+                            logger.warning(f"Could not bridge slide {idx+1} to Catbox: {e}")
 
                 if not public_slide_url:
                     continue

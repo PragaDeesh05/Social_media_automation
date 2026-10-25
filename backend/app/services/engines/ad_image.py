@@ -188,11 +188,17 @@ class Gemini:
         from google.genai import types
 
         load_dotenv()
-        key = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
-        if not key:
-            sys.exit("GEMINI_API_KEY not found. Add it to a .env file next to this script.")
+        project = os.getenv("GOOGLE_CLOUD_PROJECT")
+        location = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
+        if not project:
+            sys.exit("GOOGLE_CLOUD_PROJECT not found. Add it to a .env file next to this script (Vertex AI mode).")
         self.types = types
-        self.client = genai.Client(api_key=key, http_options=types.HttpOptions(timeout=TIMEOUT_MS))
+        self.client = genai.Client(
+            vertexai=True,
+            project=project,
+            location=location,
+            http_options=types.HttpOptions(timeout=TIMEOUT_MS),
+        )
         self.model = model or DEFAULT_MODEL
         self._last_call = 0.0
         tb = os.getenv("GEMINI_THINKING_BUDGET", "").strip()

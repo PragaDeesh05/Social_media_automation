@@ -113,7 +113,7 @@ Social_media_automation/
 | **Caching/Jobs** | Redis | `6379` | Task coordination & worker state |
 | **Media Engine** | FFmpeg & FFprobe | 9.0.2 / Native | Video scaling (1080x1920), audio muxing, subtitle burn |
 | **Speech (TTS)** | Windows Native Speech | `System.Speech` | Offline, zero-latency human narration synthesis |
-| **AI Models** | Google Gemini SDK | `gemini-flash-lite-latest` | Chunked semantic analysis, 30-day matrix, post copy |
+| **AI Models** | Google Vertex AI (google-genai SDK) | `gemini-3.5-flash-lite` (primary) / `gemini-3.1-flash-lite` (fallback) | Chunked semantic analysis, 30-day matrix, post copy |
 | **Frontend** | React 19 + TypeScript | `5174` (`0.0.0.0`) | Midnight Rail dashboard, interactive canvas |
 | **CSS Styling** | Tailwind CSS 3.4 | — | Custom dark theme, typography, crisp scrollbars |
 
@@ -144,9 +144,11 @@ Social_media_automation/
    MINIO_SECRET_KEY=minioadmin
    MINIO_BUCKET_NAME=incubrix-assets
    MINIO_SECURE=False
-   GEMINI_API_KEY=your-gemini-api-key-here
-   GEMINI_MODEL=gemini-flash-lite-latest
-   GEMINI_FALLBACK_MODEL=gemini-3.8-flash
+   GOOGLE_GENAI_USE_VERTEXAI=True
+   GOOGLE_CLOUD_PROJECT=your-gcp-project-id
+   GOOGLE_CLOUD_LOCATION=us-central1
+   GEMINI_MODEL=gemini-3.5-flash-lite
+   GEMINI_FALLBACK_MODEL=gemini-3.1-flash-lite
    FERNET_ENCRYPTION_KEY=your-32-byte-base64-fernet-key-here
    JWT_SECRET_KEY=change-this-to-a-strong-random-secret
    ```

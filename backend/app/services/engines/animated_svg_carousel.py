@@ -237,12 +237,15 @@ def call_gemini_carousel(
     """
     load_dotenv(_env_path if _env_path.exists() else None)
     load_dotenv()
-    key = api_key or os.getenv("GEMINI_API_KEY")
-    if not key:
-        raise ValueError("GEMINI_API_KEY not found. Please set it in .env or pass it explicitly.")
+    project = os.getenv("GOOGLE_CLOUD_PROJECT")
+    location = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
+    if not project:
+        raise ValueError("GOOGLE_CLOUD_PROJECT not found. Please set it in .env (Vertex AI mode).")
 
     client = genai.Client(
-        api_key=key,
+        vertexai=True,
+        project=project,
+        location=location,
         http_options=types.HttpOptions(timeout=timeout_ms),
     )
 

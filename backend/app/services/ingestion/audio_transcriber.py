@@ -1,9 +1,11 @@
-import base64
+import asyncio
 import json
 import os
 import re
 from typing import Dict, Any, List
-import httpx
+
+from google import genai
+from google.genai import types
 
 from app.core.config import settings
 from app.core.logging import logger
@@ -35,12 +37,8 @@ class AudioTranscriber:
         with open(audio_path, "rb") as f:
             audio_bytes = f.read()
 
-        b64_data = base64.b64encode(audio_bytes).decode("utf-8")
         ext = os.path.splitext(audio_path)[1].lower()
         mime_type = "audio/mp3" if ext in (".mp3", ".m4a") else "audio/wav"
-
-        # Call Gemini API with audio part
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{settings.GEMINI_MODEL}:generateContent?key={settings.GEMINI_API_KEY}"
 
         prompt = (
             "You are a professional transcriptionist. Listen to the entire attached audio recording and transcribe it accurately.\n"
@@ -57,33 +55,41 @@ class AudioTranscriber:
             "Return valid JSON only without markdown code blocks."
         )
 
-        payload = {
-            "contents": [
-                {
-                    "parts": [
-                        {"inlineData": {"mimeType": mime_type, "data": b64_data}},
-                        {"text": prompt}
-                    ]
-                }
-            ],
-            "generationConfig": {
-                "temperature": 0.2,
-                "responseMimeType": "application/json"
-            }
-        }
-
         try:
-            async with httpx.AsyncClient(timeout=90.0) as client:
-                res = await client.post(url, json=payload)
-                if res.status_code == 200:
-                    text_resp = res.json()["candidates"][0]["content"]["parts"][0]["text"].strip()
-                    # Strip any accidental ```json blocks
-                    text_resp = re.sub(r"^```json\s*", "", text_resp)
-                    text_resp = re.sub(r"\s*```$", "", text_resp)
-                    data = json.loads(text_resp)
-                    return data
-                else:
-                    logger.warning(f"Gemini audio transcription returned {res.status_code}: {res.text}")
+            client = genai.Client(
+                vertexai=True,
+                project=settings.GOOGLE_CLOUD_PROJECT,
+                location=settings.GOOGLE_CLOUD_LOCATION or "us-central1",
+            )
+            audio_part = types.Part.from_bytes(data=audio_bytes, mime_type=mime_type)
+            cfg = types.GenerateContentConfig(
+                temperature=0.2,
+                response_mime_type="application/json",
+            )
+
+            def _transcribe(model_name: str) -> str:
+                return client.models.generate_content(
+                    model=model_name,
+                    contents=[audio_part, prompt],
+                    config=cfg,
+                ).text
+
+            # Primary model first, then fallback.
+            response_text = None
+            for model_name in (settings.GEMINI_MODEL, settings.GEMINI_FALLBACK_MODEL):
+                try:
+                    response_text = await asyncio.to_thread(_transcribe, model_name)
+                    if response_text:
+                        break
+                except Exception as model_err:
+                    logger.warning(f"Vertex AI audio transcription with {model_name} failed: {model_err}")
+
+            if response_text:
+                text_resp = response_text.strip()
+                # Strip any accidental ```json blocks
+                text_resp = re.sub(r"^```json\s*", "", text_resp)
+                text_resp = re.sub(r"\s*```$", "", text_resp)
+                return json.loads(text_resp)
         except Exception as e:
             logger.error(f"Error in Gemini audio transcription: {e}")
 

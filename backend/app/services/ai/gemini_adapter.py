@@ -1,9 +1,11 @@
+import asyncio
 import json
 import re
-import time
-from typing import Dict, Any, Optional, List, Type
-import httpx
+from typing import Dict, Any, Optional, Type
+
 from pydantic import BaseModel
+from google import genai
+from google.genai import types
 
 from app.core.config import settings
 from app.core.logging import logger
@@ -11,45 +13,79 @@ from app.core.exceptions import ProviderUnavailableError
 
 
 class GeminiAdapter:
+    """Gemini models served via Google Cloud Vertex AI (google-genai SDK, Vertex mode)."""
+
     def __init__(self):
-        self.api_key = settings.GEMINI_API_KEY
+        self.project = settings.GOOGLE_CLOUD_PROJECT
+        self.location = settings.GOOGLE_CLOUD_LOCATION or "us-central1"
         self.primary_model = settings.GEMINI_MODEL
         self.fallback_model = settings.GEMINI_FALLBACK_MODEL
-        self.base_url = "https://generativelanguage.googleapis.com/v1beta/models"
+        self._client: Optional[genai.Client] = None
+
+    def _get_client(self) -> genai.Client:
+        """Lazily build (and cache) the Vertex AI genai client."""
+        if self._client is None:
+            if not self.project:
+                raise ProviderUnavailableError("gemini", "GOOGLE_CLOUD_PROJECT is not configured in environment")
+            self._client = genai.Client(
+                vertexai=True,
+                project=self.project,
+                location=self.location,
+            )
+        return self._client
 
     def check_availability(self) -> Dict[str, Any]:
-        """Runtime health check for Gemini API access."""
-        if not self.api_key:
-            return {"available": False, "reason": "GEMINI_API_KEY is not configured in environment"}
-        
-        url = f"{self.base_url}/{self.primary_model}:generateContent?key={self.api_key}"
-        try:
-            with httpx.Client(timeout=10.0) as client:
-                res = client.post(url, json={"contents": [{"parts": [{"text": "Ping"}]}]})
-                if res.status_code == 200:
-                    return {"available": True, "model": self.primary_model, "status": "operational"}
-                elif res.status_code == 404:
-                    # Test fallback model
-                    fb_url = f"{self.base_url}/{self.fallback_model}:generateContent?key={self.api_key}"
-                    fb_res = client.post(fb_url, json={"contents": [{"parts": [{"text": "Ping"}]}]})
-                    if fb_res.status_code == 200:
-                        return {"available": True, "model": self.fallback_model, "status": "operational"}
-                    return {"available": False, "reason": f"Models unavailable: {res.text}"}
-                else:
-                    return {"available": False, "reason": f"API error HTTP {res.status_code}: {res.text}"}
-        except Exception as e:
-            return {"available": False, "reason": f"Connection error: {e}"}
+        """Runtime health check for Vertex AI Gemini access."""
+        if not self.project:
+            return {"available": False, "reason": "GOOGLE_CLOUD_PROJECT is not configured in environment"}
+
+        client = self._get_client()
+        for model in (self.primary_model, self.fallback_model):
+            try:
+                resp = client.models.generate_content(model=model, contents="Ping")
+                if getattr(resp, "text", None):
+                    return {
+                        "available": True,
+                        "model": model,
+                        "status": "operational",
+                        "provider": "vertex_ai",
+                        "project": self.project,
+                        "location": self.location,
+                    }
+            except Exception as e:
+                logger.warning(f"Vertex AI health check for {model} failed: {e}")
+        return {"available": False, "reason": "No Gemini model responded on Vertex AI"}
+
+    def _generate_text_sync(
+        self,
+        contents: list,
+        config: types.GenerateContentConfig,
+        models: list,
+    ) -> str:
+        """Blocking call against Vertex AI with automatic model fallback."""
+        client = self._get_client()
+        last_error: Optional[str] = None
+        for model in models:
+            try:
+                resp = client.models.generate_content(model=model, contents=contents, config=config)
+                if getattr(resp, "text", None):
+                    return resp.text.strip()
+                last_error = "empty response"
+            except Exception as e:
+                logger.warning(f"Gemini {model} failed: {e}")
+                last_error = str(e)
+        raise ProviderUnavailableError("gemini", f"All Gemini model attempts failed: {last_error}")
 
     async def generate_text(
         self,
         prompt: str,
         system_instruction: Optional[str] = None,
         temperature: float = 0.7,
-        max_tokens: int = 4096
+        max_tokens: int = 4096,
     ) -> str:
         """Generate open-ended text response with automatic model fallback."""
-        if not self.api_key:
-            raise ProviderUnavailableError("gemini", "GEMINI_API_KEY not configured")
+        if not self.project:
+            raise ProviderUnavailableError("gemini", "GOOGLE_CLOUD_PROJECT not configured")
 
         contents = []
         if system_instruction:
@@ -57,43 +93,21 @@ class GeminiAdapter:
             contents.append({"role": "model", "parts": [{"text": "Understood. I will strictly follow these instructions."}]})
         contents.append({"role": "user", "parts": [{"text": prompt}]})
 
-        payload = {
-            "contents": contents,
-            "generationConfig": {
-                "temperature": temperature,
-                "maxOutputTokens": max_tokens
-            }
-        }
+        config = types.GenerateContentConfig(
+            temperature=temperature,
+            max_output_tokens=max_tokens,
+        )
 
-        # Try primary model first, then fallback
+        # Primary model first, then fallback, then a safe default.
         models = [self.primary_model, self.fallback_model, "gemini-3.5-flash-lite"]
-        last_error = None
-
-        for model in models:
-            url = f"{self.base_url}/{model}:generateContent?key={self.api_key}"
-            try:
-                async with httpx.AsyncClient(timeout=45.0) as client:
-                    resp = await client.post(url, json=payload)
-                    if resp.status_code == 200:
-                        data = resp.json()
-                        parts = data.get("candidates", [{}])[0].get("content", {}).get("parts", [])
-                        if parts:
-                            return parts[0].get("text", "").strip()
-                    else:
-                        logger.warning(f"Gemini {model} returned {resp.status_code}: {resp.text}")
-                        last_error = f"HTTP {resp.status_code}: {resp.text}"
-            except Exception as e:
-                logger.warning(f"Gemini call to {model} failed: {e}")
-                last_error = str(e)
-
-        raise ProviderUnavailableError("gemini", f"All Gemini model attempts failed: {last_error}")
+        return await asyncio.to_thread(self._generate_text_sync, contents, config, models)
 
     async def generate_structured(
         self,
         prompt: str,
         response_model: Optional[Type[BaseModel]] = None,
         system_instruction: Optional[str] = None,
-        temperature: float = 0.3
+        temperature: float = 0.3,
     ) -> Dict[str, Any]:
         """Generate strictly structured JSON response validated with Pydantic."""
         schema_instruction = ""
@@ -105,7 +119,7 @@ class GeminiAdapter:
         raw_response = await self.generate_text(
             prompt=full_prompt,
             system_instruction=system_instruction,
-            temperature=temperature
+            temperature=temperature,
         )
 
         clean_json = raw_response.strip()
