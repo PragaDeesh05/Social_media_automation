@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1350" width="100%" height="100%">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&amp;display=swap');
+      
+      .bg { fill: #0B0F19; }
+      .card-bg { fill: #131B2E; rx: 32px; filter: url(#shadow); }
+      .text-primary { font-family: 'Plus Jakarta Sans', Arial, sans-serif; fill: #FFFFFF; font-weight: 800; }
+      .text-body { font-family: 'Plus Jakarta Sans', Arial, sans-serif; fill: #94A3B8; font-weight: 400; }
+      .accent-gradient { fill: url(#brandGrad); }
+      .accent-text { font-family: 'Plus Jakarta Sans', Arial, sans-serif; fill: url(#brandGrad); font-weight: 800; }
+      
+      .a {
+        opacity: 0;
+        transform-box: fill-box;
+        transform-origin: center;
+        animation-fill-mode: forwards;
+      }
+      .fade-up {
+        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+      }
+      .fade-up-delayed {
+        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards, floatIdle 4s ease-in-out 1.1s infinite alternate;
+      }
+      .pulse-slow {
+        animation: pulseScale 3s ease-in-out 0s infinite alternate;
+      }
+      
+      @keyframes fadeUp {
+        0% { opacity: 0; transform: translateY(30px); }
+        100% { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes floatIdle {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-10px); }
+      }
+      @keyframes pulseScale {
+        0% { transform: scale(1); }
+        100% { transform: scale(1.03); }
+      }
+
+      @media (prefers-reduced-motion: reduce) { 
+        .a { animation: none !important; opacity: 1 !important; transform: none !important; } 
+      }
+    </style>
+    
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4F46E5" />
+      <stop offset="100%" stop-color="#06B6D4" />
+    </linearGradient>
+
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E293B" />
+      <stop offset="100%" stop-color="#0F172A" />
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="20" stdDeviation="25" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="40" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1080" height="1350" class="bg" />
+
+  <!-- Ambient background glow -->
+  <circle cx="540" cy="450" r="300" fill="#4F46E5" opacity="0.15" filter="url(#glow)" />
+
+  <!-- Persistent UI: Brand & Progress -->
+  <text x="90" y="110" class="text-primary" font-size="28" text-anchor="start">IncuBrix</text>
+  <text x="990" y="110" class="text-body" font-size="28" text-anchor="end">1 / 3</text>
+
+  <!-- Main Card container -->
+  <g class="a fade-up">
+    <rect x="90" y="180" width="900" height="990" rx="40" fill="url(#cardGrad)" stroke="#334155" stroke-width="2" filter="url(#shadow)" />
+  </g>
+
+  <!-- Hero Graphic: Autonomous Engine Visualization -->
+  <g class="a fade-up-delayed">
+    <!-- Outer Orbit -->
+    <circle cx="540" cy="550" r="160" fill="none" stroke="#334155" stroke-width="2" stroke-dasharray="8 8" />
+    
+    <!-- Central Hub -->
+    <circle cx="540" cy="550" r="90" fill="#0F172A" stroke="url(#brandGrad)" stroke-width="4" />
+    <path d="M 515,550 L 535,570 L 570,530" fill="none" stroke="#06B6D4" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+
+    <!-- Orbiting Node 1 -->
+    <g class="pulse-slow">
+      <circle cx="380" cy="480" r="45" fill="#1E293B" stroke="#4F46E5" stroke-width="3" />
+      <path d="M 370,480 H 390 M 380,470 V 490" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+    </g>
+
+    <!-- Orbiting Node 2 -->
+    <g class="pulse-slow">
+      <circle cx="700" cy="620" r="45" fill="#1E293B" stroke="#06B6D4" stroke-width="3" />
+      <circle cx="700" cy="620" r="15" fill="#06B6D4" />
+    </g>
+  </g>
+
+  <!-- Typography: Hook Headline & Sub -->
+  <g class="a fade-up" style="animation-delay: 0.7s;">
+    <text x="540" y="820" class="text-primary" font-size="64" text-anchor="start" dx="-360">Stop Manual Posting.</text>
+    <text x="540" y="900" class="accent-text" font-size="64" text-anchor="start" dx="-360">Scale on Autopilot.</text>
+    <text x="540" y="980" class="text-body" font-size="34" text-anchor="start" dx="-360">Let autonomous AI handle your social scheduling.</text>
+  </g>
+
+  <!-- Seamless Swipe Edge Element (Right Edge Connection) -->
+  <path d="M 990,750 C 1010,780 1010,820 990,850" fill="none" stroke="url(#brandGrad)" stroke-width="6" stroke-linecap="round" />
+  <circle cx="990" cy="800" r="6" fill="#06B6D4" />
+
+  <!-- Swipe Hint -->
+  <g class="a fade-up" style="animation-delay: 0.9s;">
+    <text x="900" y="1110" class="text-body" font-size="28" text-anchor="end">Swipe</text>
+    <path d="M 920,1101 L 940,1101 M 932,1093 L 940,1101 L 932,1109" fill="none" stroke="#94A3B8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+</svg>

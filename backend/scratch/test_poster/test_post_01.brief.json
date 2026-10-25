@@ -1,0 +1,61 @@
+{
+  "title": "IncuBrix AI Social Automation",
+  "brand": {
+    "name": "IncuBrix",
+    "tagline": "AI Social Media Marketing Automation",
+    "website": "incubrix.com",
+    "handle": "@incubrix"
+  },
+  "copy": {
+    "eyebrow": "IncuBrix AI Platform",
+    "headline": "Automate Your Social Growth",
+    "headline_emphasis": "Growth",
+    "support": "Generate, schedule, and amplify viral posts across every channel on autopilot.",
+    "cta": "Start Free Trial",
+    "steps": [
+      "Generate",
+      "Schedule",
+      "Amplify",
+      "Analyze"
+    ],
+    "stats": [],
+    "offer": null
+  },
+  "concept": "A futuristic fusion of a dynamic megaphone booster engine launching glowing orbital campaign rings. High-energy tech aesthetic with neon electric accents on deep midnight blue, projecting power, automation, and effortless viral momentum.",
+  "design_system": {
+    "palette": {
+      "bg": "#0D0E1A",
+      "bg_alt": "#16192E",
+      "primary": "#6366F1",
+      "secondary": "#06B6D4",
+      "accent": "#F43F5E",
+      "ink": "#FFFFFF",
+      "paper": "#F8FAFC"
+    },
+    "fonts": {
+      "display": "Archivo Black",
+      "body": "Inter"
+    },
+    "headline_caps": true,
+    "corner_radius": 24,
+    "style": "Vibrant 3D-inspired vector with volumetric gradients, glowing edge rim-lights, and bold geometric conduits",
+    "lighting": "Intense top-left electric cyan rim light with soft neon pink back-glow from the propulsion nozzle"
+  },
+  "composition": {
+    "layout": "stack",
+    "hero": "A central sleek isometric turbo-megaphone booster angled at 35 degrees pointing up-right: glossy deep indigo fuselage (1E1B4B) with bright cyan glowing seams (06B6D4), an oversized flared sound cone radiating concentric holographic sound rings in translucent gradient cyan to magenta, and twin miniature intake thrusters firing bright coral exhaust flames (F43F5E). Four rounded translucent glass orbit nodes float along a luminous ribbon around the megaphone nozzle, symbolizing content workflow.",
+    "props": [
+      "Four-point neon sparkle stars floating in the upper-right corner",
+      "Holographic hashtag chip 'TRENDING' glowing softly at top-left of the hero",
+      "Translucent calendar schedule badge hovering at bottom-left",
+      "Floating mini heart and share indicator orbs in coral and cyan drifting from the thruster blast",
+      "Subtle glowing geometric particle dust surrounding the sound waves"
+    ],
+    "background": "Deep radial gradient from glowing indigo (1E1B4B) at center to dark obsidian (0D0E1A) at the outer borders with faint digital grid lines fading into the perimeter",
+    "decor": [
+      "Large faint concentric circular soundwaves in 5% opacity cyan",
+      "Sweeping angled speed-lines cutting across the bottom-right corner",
+      "Subtle dotted matrix constellation pattern in the upper half"
+    ]
+  }
+}

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" height="100%">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@800&amp;family=Inter&amp;display=swap');
+.a { opacity: 0; transform-box: fill-box; transform-origin: center; animation-fill-mode: forwards; }
+.h { animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) 0.5s forwards; }
+.sp { animation: rise 0.9s cubic-bezier(0.22,1,0.36,1) 1.2s forwards; }
+@keyframes rise { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .a { animation: none !important; opacity: 1 !important; transform: none !important; } }
+</style>
+<rect width="1080" height="1920" fill="#0F172A"/>
+<rect x="907" y="1232" width="173" height="32" fill="#38BDF8"/>
+<text x="72" y="100" font-size="32" font-weight="700" fill="#334155" font-family="'Poppins', Arial, sans-serif">IncuBrix</text>
+<g class="a h"><text x="540" y="707" text-anchor="middle" font-size="88" font-weight="800" fill="#334155" font-family="'Poppins', Arial, sans-serif">Stop Juggling</text></g><g class="a h"><text x="540" y="812" text-anchor="middle" font-size="88" font-weight="800" fill="#334155" font-family="'Poppins', Arial, sans-serif">Tools</text></g><g class="a sp"><text x="540" y="958" text-anchor="middle" font-size="44" fill="#A855F7" font-family="'Inter', Arial, sans-serif">Fragmented apps lead to creator</text></g><g class="a sp"><text x="540" y="1020" text-anchor="middle" font-size="44" fill="#A855F7" font-family="'Inter', Arial, sans-serif">burnout.</text></g>
+</svg>

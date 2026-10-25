@@ -1,0 +1,91 @@
+{
+  "title": "IncuBrix Studio Creator Burnout Solution",
+  "brand": {
+    "name": "IncuBrix",
+    "tagline": "The Unified Creator Studio",
+    "website": "incubrix.com",
+    "handle": "@incubrix"
+  },
+  "voice": {
+    "name": "Kore",
+    "speaking_rate": 1.05,
+    "why": "Energetic and upbeat, perfect for addressing a high-pain creator problem and pivoting quickly to an exciting solution."
+  },
+  "world": "A vibrant digital creator workspace transitioning from a chaotic desk with scattered floating application icons to a clean, harmonious glowing IncuBrix studio cube. The style is modern 2D vector with smooth gradients and playful motion.",
+  "design_system": {
+    "palette": {
+      "bg": "#0F172A",
+      "bg_alt": "#1E293B",
+      "primary": "#6366F1",
+      "secondary": "#A855F7",
+      "accent": "#38BDF8",
+      "ink": "#F8FAFC",
+      "paper": "#334155"
+    },
+    "fonts": {
+      "display": "Poppins",
+      "body": "Inter"
+    },
+    "corner_radius": 24,
+    "illustration_style": "Clean 2D vector art with smooth glowing gradients, minimalist icons, and dynamic UI elements.",
+    "hero_element": "A glowing indigo and purple studio cube representing the unified IncuBrix platform.",
+    "recurring_motifs": [
+      "floating app windows",
+      "glowing connection lines",
+      "progress bars"
+    ],
+    "ribbon": {
+      "y_fraction": 0.65,
+      "thickness": 32,
+      "color_key": "accent"
+    }
+  },
+  "scenes": [
+    {
+      "id": 1,
+      "role": "HOOK",
+      "narration": "Tired of juggling a dozen fragmented tools and burning out before you even hit record?",
+      "on_screen_headline": "Stop Juggling Tools",
+      "on_screen_support": "Fragmented apps lead to creator burnout.",
+      "visual_description": "Vertical 9:16 layout showing a stressed creator silhouette surrounded by chaotic floating icons of video editors, schedulers, and analytics apps bouncing and flashing red.",
+      "key_beats": [
+        {
+          "narration_fragment": "Tired of juggling a dozen fragmented tools",
+          "visual_action": "Various colored app icons spin chaotically around a dark central figure."
+        },
+        {
+          "narration_fragment": "and burning out before you even hit record?",
+          "visual_action": "The icons flash red and the background dims to signal frustration."
+        }
+      ],
+      "mood": "Frustrated, overwhelming, high-energy",
+      "background_color_key": "bg",
+      "opens_with": "Dark studio background with spinning chaotic icons.",
+      "closes_with": "The chaotic icons sweep to the left as a glowing purple cube enters from the right.",
+      "transition_out": "smoothleft"
+    },
+    {
+      "id": 2,
+      "role": "SOLUTION",
+      "narration": "Switch to IncuBrix, the unified studio that brings all your creation workflows into one seamless flow.",
+      "on_screen_headline": "Meet IncuBrix",
+      "on_screen_support": "One unified studio for all your creation needs.",
+      "visual_description": "The chaotic icons snap neatly into the sides of a large, glowing indigo and purple IncuBrix cube in the center of the frame. A sleek checkmark appears with the website and handle.",
+      "key_beats": [
+        {
+          "narration_fragment": "Switch to IncuBrix, the unified studio",
+          "visual_action": "The glowing hero cube expands center-screen, absorbing the scattered icons."
+        },
+        {
+          "narration_fragment": "that brings all your creation workflows into one seamless flow.",
+          "visual_action": "Smooth purple and blue interface waves flow out from the cube, revealing incubrix dot com at the base."
+        }
+      ],
+      "mood": "Relieving, triumphant, modern",
+      "background_color_key": "bg_alt",
+      "opens_with": "The glowing hero cube from scene one settling into the center.",
+      "closes_with": "The IncuBrix cube pulses gently with the brand handle visible on screen.",
+      "transition_out": "fade"
+    }
+  ]
+}

@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1920" width="100%" height="100%">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;800&amp;family=Inter:wght@400;600&amp;display=swap');
+.a { opacity: 0; transform-box: fill-box; transform-origin: center; animation-fill-mode: forwards; }
+.bg-fade { animation: fadeIn 0.6s ease-out 0s forwards; }
+.cube-in { animation: popIn 0.9s cubic-bezier(0.34,1.56,0.64,1) 0.55s forwards; }
+.cube-pulse { animation: pulseFloat 4s ease-in-out 1.45s infinite alternate; }
+.text-rise-1 { animation: riseUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.70s forwards; }
+.text-rise-2 { animation: riseUp 0.8s cubic-bezier(0.22,1,0.36,1) 1.20s forwards; }
+.ribbon-anim { animation: ribbonWave 3.5s ease-in-out 1.50s infinite alternate; }
+.icon-absorb-1 { animation: absorbIcon1 1.0s cubic-bezier(0.16,1,0.3,1) 0.60s forwards; }
+.icon-absorb-2 { animation: absorbIcon2 1.0s cubic-bezier(0.16,1,0.3,1) 0.65s forwards; }
+.icon-absorb-3 { animation: absorbIcon3 1.0s cubic-bezier(0.16,1,0.3,1) 0.70s forwards; }
+.icon-absorb-4 { animation: absorbIcon4 1.0s cubic-bezier(0.16,1,0.3,1) 0.75s forwards; }
+.cta-in { animation: scaleIn 0.8s cubic-bezier(0.34,1.56,0.64,1) 1.80s forwards; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes riseUp { from { opacity: 0; transform: translateY(35px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes popIn { from { opacity: 0; transform: scale(0.4) rotate(-15deg); } to { opacity: 1; transform: scale(1) rotate(0deg); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+@keyframes pulseFloat { 
+  0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 20px 40px rgba(168,85,247,0.3)); } 
+  100% { transform: translateY(-12px) scale(1.02); filter: drop-shadow(0 30px 60px rgba(99,102,241,0.5)); } 
+}
+@keyframes ribbonWave {
+  0% { transform: translateX(0px) rotate(0deg) scale(1); }
+  100% { transform: translateX(10px) rotate(3deg) scale(1.05); }
+}
+@keyframes absorbIcon1 {
+  0% { opacity: 1; transform: translate(-320px, -240px) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(0px, 0px) scale(0.1) rotate(360deg); }
+}
+@keyframes absorbIcon2 {
+  0% { opacity: 1; transform: translate(340px, -200px) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(0px, 0px) scale(0.1) rotate(-360deg); }
+}
+@keyframes absorbIcon3 {
+  0% { opacity: 1; transform: translate(-300px, 220px) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(0px, 0px) scale(0.1) rotate(270deg); }
+}
+@keyframes absorbIcon4 {
+  0% { opacity: 1; transform: translate(320px, 260px) scale(1) rotate(0deg); }
+  100% { opacity: 0; transform: translate(0px, 0px) scale(0.1) rotate(-270deg); }
+}
+
+@media (prefers-reduced-motion: reduce) { 
+  .a { animation: none !important; opacity: 1 !important; transform: none !important; } 
+}
+</style>
+
+<defs>
+  <linearGradient id="cubeTop" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#A855F7" />
+    <stop offset="100%" stop-color="#6366F1" />
+  </linearGradient>
+  <linearGradient id="cubeLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#6366F1" />
+    <stop offset="100%" stop-color="#4F46E5" />
+  </linearGradient>
+  <linearGradient id="cubeRight" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#38BDF8" />
+    <stop offset="100%" stop-color="#6366F1" />
+  </linearGradient>
+  <linearGradient id="ctaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+    <stop offset="0%" stop-color="#6366F1" />
+    <stop offset="100%" stop-color="#A855F7" />
+  </linearGradient>
+  <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+    <feGaussianBlur stdDeviation="25" result="blur" />
+    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+  </filter>
+</defs>
+
+
+<rect width="1080" height="1920" fill="#1E293B" class="a bg-fade" style="animation-delay: 0s;" />
+
+
+<circle cx="540" cy="780" r="300" fill="#6366F1" opacity="0.15" filter="url(#glow)" />
+<circle cx="540" cy="780" r="150" fill="#38BDF8" opacity="0.1" filter="url(#glow)" />
+
+
+<text x="72" y="100" font-size="32" font-weight="700" fill="#F8FAFC" font-family="'Poppins', Arial, sans-serif">IncuBrix</text>
+
+
+<g transform="translate(540, 780)">
+  
+  
+  <g class="a icon-absorb-1">
+    <rect x="-60" y="-60" width="120" height="120" rx="28" fill="#334155" stroke="#38BDF8" stroke-width="3" />
+    <circle cx="0" cy="0" r="30" fill="#38BDF8" opacity="0.8" />
+  </g>
+  <g class="a icon-absorb-2">
+    <rect x="-60" y="-60" width="120" height="120" rx="28" fill="#334155" stroke="#A855F7" stroke-width="3" />
+    <path d="M-25 15 L0 -25 L25 15 Z" fill="#A855F7" />
+  </g>
+  <g class="a icon-absorb-3">
+    <rect x="-60" y="-60" width="120" height="120" rx="28" fill="#334155" stroke="#6366F1" stroke-width="3" />
+    <rect x="-25" y="-25" width="50" height="50" rx="12" fill="#6366F1" />
+  </g>
+  <g class="a icon-absorb-4">
+    <rect x="-60" y="-60" width="120" height="120" rx="28" fill="#334155" stroke="#38BDF8" stroke-width="3" />
+    <path d="M-20 -20 H20 V20 H-20 Z" fill="none" stroke="#38BDF8" stroke-width="8" stroke-linecap="round" />
+  </g>
+
+  
+  <g class="a cube-in">
+    <g class="a cube-pulse">
+      
+      <ellipse cx="0" cy="180" rx="160" ry="40" fill="#6366F1" opacity="0.4" filter="url(#glow)" />
+
+      
+      
+      <polygon points="0,-173 150,-86 0,0 -150,-86" fill="url(#cubeTop)" />
+      
+      <polygon points="-150,-86 0,0 0,173 -150,86" fill="url(#cubeLeft)" />
+      
+      <polygon points="0,0 150,-86 150,86 0,173" fill="url(#cubeRight)" />
+
+      
+      <path d="M-75 43 L0 86 L75 43" fill="none" stroke="#F8FAFC" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" opacity="0.8" />
+      <circle cx="0" cy="-86" r="22" fill="#F8FAFC" opacity="0.9" />
+      
+      <path d="M-8 -85 L-3 -75 L10 -95" fill="none" stroke="#6366F1" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+  </g>
+</g>
+
+
+<g transform="translate(420, 1020)"><g class="a ribbon-anim">
+  <path d="M0 16 C 60 -16, 180 -16, 240 16" fill="none" stroke="#38BDF8" stroke-width="32" stroke-linecap="round" opacity="0.85" filter="url(#glow)" />
+  <path d="M30 16 C 80 -8, 160 -8, 210 16" fill="none" stroke="#F8FAFC" stroke-width="8" stroke-linecap="round" opacity="0.6" />
+</g>
+
+
+</g><g class="a text-rise-1">
+  <text x="540" y="380" text-anchor="middle" font-size="76" font-weight="800" fill="#F8FAFC" font-family="'Poppins', Arial, sans-serif" letter-spacing="-1">Meet IncuBrix</text>
+</g>
+
+<g class="a text-rise-2">
+  <text x="540" y="470" text-anchor="middle" font-size="34" font-weight="400" fill="#94A3B8" font-family="'Inter', Arial, sans-serif">One unified studio for all your creation needs.</text>
+</g>
+
+
+<g transform="translate(540, 1620)"><g class="a cta-in">
+  <rect x="-320" y="-50" width="640" height="100" rx="50" fill="url(#ctaGrad)" filter="url(#glow)" />
+  <rect x="-320" y="-50" width="640" height="100" rx="50" fill="url(#ctaGrad)" />
+  <text x="0" y="12" text-anchor="middle" font-size="32" font-weight="700" fill="#F8FAFC" font-family="'Poppins', Arial, sans-serif">incubrix.com  •  @incubrix</text>
+</g>
+
+</g></svg>

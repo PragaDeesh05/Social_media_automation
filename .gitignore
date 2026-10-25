@@ -1,0 +1,55 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+*.coverage.*
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+backend/venv/
+
+# Environment variables & secrets
+.env
+.env.*
+*.env
+!*.env.example
+backend/.env
+frontend/.env
+test.py
+
+# Node & Frontend Dependencies & Builds
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+.npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime Media & Generated Assets
+assets/
+backend/assets/final/*
+backend/assets/source/*
+backend/assets/temp/*
+!backend/assets/final/.gitkeep
+!backend/assets/source/.gitkeep
+
+# Operating System & IDE files
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Log files
+*.log

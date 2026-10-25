@@ -1,0 +1,65 @@
+{
+  "title": "IncuBrix AI Social Automation",
+  "brand": {
+    "name": "IncuBrix",
+    "tagline": "Next-Gen AI Social Media Marketing Automation",
+    "website": "incubrix.com",
+    "handle": "@incubrix"
+  },
+  "copy": {
+    "eyebrow": "IncuBrix Platform",
+    "headline": "Automate your social growth instantly",
+    "headline_emphasis": "instantly",
+    "support": "AI-powered scheduling, content generation, and analytics to scale your reach effortlessly.",
+    "cta": "Start Free",
+    "steps": [
+      "Connect",
+      "Generate",
+      "Automate"
+    ],
+    "stats": [
+      {
+        "value": "10x",
+        "label": "FASTER GROWTH"
+      },
+      {
+        "value": "24/7",
+        "label": "AI POSTING"
+      }
+    ],
+    "offer": null
+  },
+  "concept": "A sleek, hub-and-orbit visual metaphor showing a glowing AI core distributing content nodes to social channels, set against a deep modern dark backdrop.",
+  "design_system": {
+    "palette": {
+      "bg": "#0D0F18",
+      "bg_alt": "#16192B",
+      "primary": "#6366F1",
+      "secondary": "#EC4899",
+      "accent": "#38BDF8",
+      "ink": "#FFFFFF",
+      "paper": "#94A3B8"
+    },
+    "fonts": {
+      "display": "Archivo Black",
+      "body": "Inter"
+    },
+    "headline_caps": true,
+    "corner_radius": 24,
+    "style": "Clean modern vector illustration with smooth gradients, glowing highlights, and soft layered shadows.",
+    "lighting": "Top-left directional lighting with vibrant neon rim lights and soft ambient glow."
+  },
+  "composition": {
+    "layout": "stack",
+    "hero": "Central glowing AI cube core with 3 orbiting floating content cards connected by dashed gradient paths, drawn in rich purples and cyan blues.",
+    "props": [
+      "Sparkling data particles floating near the core",
+      "Tiny glowing plus icons trailing the orbit path"
+    ],
+    "background": "Deep navy vertical gradient with a soft central radial glow and large faint abstract geometric mesh lines.",
+    "decor": [
+      "Large faint glowing circle behind the hero",
+      "Subtle diagonal grid overlay"
+    ]
+  }
+}
